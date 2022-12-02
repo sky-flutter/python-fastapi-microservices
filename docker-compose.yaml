@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  users:
+    build: ./users
+    command: python app/main.py
+    volumes:
+      - ./users/:/app/
+    ports:
+      - 3001:3001
+    environment:
+      - AWS_BUCKET_NAME=
+      - AWS_ACCESS_KEY=
+      - AWS_SECRET_KEY=
+      - AWS_REGION=
+    
+  products:
+    build: ./products
+    command: python app/main.py
+    volumes:
+      - ./products/:/app/
+    ports:
+      - 3002:3002
+    environment:
+      - AWS_BUCKET_NAME=
+      - AWS_ACCESS_KEY=
+      - AWS_SECRET_KEY=
+      - AWS_REGION=
+  
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8085:8080"
+    volumes:
+      - ./nginx_config.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - products
+      - users
+    
