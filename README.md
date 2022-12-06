@@ -17,7 +17,7 @@ To run this project, you will need to add the following environment variables to
 `AWS_BUCKET_NAME`
 
 
-## Run Locally
+## Run Locally Via Docker
 
 Clone the project
 
@@ -44,3 +44,36 @@ Hit API URL in postman
   http://localhost:8085/api/v1/product
 ```
 
+## Run Locally Via Kubernetes
+
+Build docker images from project root directory
+
+```bash
+docker build -t python-microservices-products products/
+docker build -t python-microservices-users users/
+```
+
+Move images to minikube using
+
+```bash
+minikube image load python-microservices-products
+minikube image load python-microservices-users
+```
+Map IpAddress to DNS name in hosts file
+
+```bash
+127.0.0.1 rx.cloths.com
+```
+
+Go to the k8s directory
+
+```bash
+kubectl apply -f .
+```
+
+Hit API URL in postman
+
+```bash
+  http://rx.cloths.com/user
+  http://rx.cloths.com/product
+```
