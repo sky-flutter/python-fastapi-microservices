@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.org/rewrites: "serviceName=users-svc rewrite=/user/;serviceName=products-svc rewrite=/product/"
+  name: microservice-ingress
+  labels:
+    name: microservice-ingress
+spec:
+  rules:
+    - host: "rx.cloths.com"
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/user"
+            backend:
+              service:
+                name: users-svc
+                port:
+                  number: 3001
+          - pathType: Prefix
+            path: "/product"
+            backend:
+              service:
+                name: products-svc
+                port:
+                  number: 3002

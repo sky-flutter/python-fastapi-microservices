@@ -6,5 +6,12 @@ COPY  requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY . .
+ENV AWS_BUCKET_NAME=
+ENV AWS_ACCESS_KEY=
+ENV AWS_SECRET_KEY=
+ENV AWS_REGION=
 
+COPY . .
+EXPOSE 3002
+
+CMD [ "python","app/main.py" ]

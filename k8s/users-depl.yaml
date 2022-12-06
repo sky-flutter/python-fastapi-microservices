@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-depl
+  template:
+    metadata:
+      labels:
+        app: users-depl
+    spec:
+      containers:
+      - name: users-depl
+        image: python-microservices-users
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 3001
